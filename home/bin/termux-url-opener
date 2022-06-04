@@ -1,0 +1,60 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+########################################################################
+# Termux URL Opener Handle
+# Execute termux-url-opener
+#
+# Copyright (C) 2022 Mehedi Hasan
+#
+# Author(s): Mehedi Hasan <0xmehedi@tutanota.com>
+#
+# Webpage  : https://github.com/0xMehedi/termux-spice
+#
+# Any questions, comments, or bug reports may be sent to
+# above email address. Enjoy "Termux Spice"!
+#
+# License  : MIT License
+########################################################################
+
+printf '%s\n' "© 2022 Mehedi Hasan"
+printf '%s\n\n' "https://github.com/0xMehedi"
+printf '%s\n' "To Download Audio Only,  Input 1"
+printf '%s\n' "To Download 360p Video,  Input 2"
+printf '%s\n' "To Download 480p Video,  Input 3"
+printf '%s\n' "To Download 720p Video,  Input 4"
+printf '%s\n' "To Download 1080p Video, Input 5"
+printf '%s\n' "For Best Quality Video,  Input 0"
+
+command="-no-mtime -o ${HOME}/storage/downloads/%(title)s.%(ext)s -f"
+read -r option
+
+if [ "$option" -eq "1" ]
+then
+  printf '%s\n' "$command 140" > "${HOME}/.config/yt-dlp/config"
+  yt-dlp "$1"
+
+elif [ "$option" -eq "2" ]
+then
+  printf '%s\n' "$command \"best[height<=360]\"" > "${HOME}/.config/yt-dlp/config"
+  yt-dlp "$1"
+
+elif [ "$option" -eq "3" ]
+then
+  printf '%s\n' "$command \"best[height<=480]\"" > "${HOME}/.config/yt-dlp/config"
+  yt-dlp "$1"
+
+elif [ "$option" -eq "4" ]
+then
+  printf '%s\n' "$command \"best[height<=720]\"" > "${HOME}/.config/yt-dlp/config"
+  yt-dlp "$1"
+
+elif [ "$option" -eq "5" ]
+then
+  printf '%s\n' "$command \"best[height<=1080]\"" > "${HOME}/.config/yt-dlp/config"
+  yt-dlp "$1"
+
+elif [ "$option" -eq "0" ]
+then
+  printf '%s\n' "$command \"bestvideo+bestaudio\"" > "${HOME}/.config/yt-dlp/config"
+  yt-dlp "$1"
+fi
