@@ -4,7 +4,8 @@
 
 ## Contributing
 
-Contributions are always welcome. Just submit a _Pull Request_ with changes you made which will then be reviewed and merged.
+Contributions are always welcome.
+Just submit a _Pull Request_ with changes you made which will then be reviewed and merged.
 
 ### Bear in Mind
 
