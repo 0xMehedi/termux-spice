@@ -44,8 +44,8 @@ git clone https://github.com/0xMehedi/termux-spice.git "${HOME}/termux-spice"
 
 # yt-dlp
 
-printf '\n%s\n' "→ Upgrading pip, and setuptools"
-pip install --upgrade pip setuptools
+printf '\n%s\n' "→ Upgrading setuptools"
+pip install --upgrade setuptools
 
 printf '\n%s\n' "→ Installing yt-dlp"
 pip install --no-deps yt-dlp
