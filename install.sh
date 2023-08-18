@@ -48,7 +48,7 @@ printf '\n%s\n' "→ Upgrading setuptools"
 pip install --upgrade setuptools
 
 printf '\n%s\n' "→ Installing yt-dlp"
-pip install --no-deps yt-dlp
+pip install yt-dlp
 sleep 1
 
 # yt-dlp Config
