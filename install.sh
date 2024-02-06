@@ -34,7 +34,7 @@ printf '\n%s\n' "→ Updating & Upgrading Pre-installed Packages"
 pkg update -y && pkg upgrade -y
 
 printf '\n%s\n' "→ Installing Selected Packages"
-pkg install -y ffmpeg git gnupg man nano neofetch python tree
+pkg install -y ffmpeg git gnupg man nano neofetch openssh openssh-sftp-server python tree
 sleep 1
 
 # Clone Repositiry

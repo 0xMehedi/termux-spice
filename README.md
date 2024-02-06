@@ -12,18 +12,20 @@ Mehedi Hasan (@0xMehedi) and the [contributors](https://github.com/0xMehedi/term
 
 _Termux Spice_ installs / configures the following packages:
 
-| Packages | Description                                                                  |
-| :------- | :--------------------------------------------------------------------------- |
-| ffmpeg   | A very fast video and audio converter                                        |
-| git      | A fast, scalable, distributed revision control system                        |
-| gnupg    | A set of programs for public key encryption and digital signatures           |
-| man      | The man utility to display the manual pages entitled name                    |
-| nano     | A small and friendly editor                                                  |
-| neofetch | A CLI system information tool written in Bash                                |
-| python   | An interpreted, interactive, object-oriented programming language            |
-| tree     | A recursive directory listing program                                        |
-| yt-dlp   | A program to download videos from YouTube and a few more sites               |
-| ohmybash | A delightful community-driven framework for managing your bash configuration |
+| Packages            | Description                                                                  |
+| :------------------ | :--------------------------------------------------------------------------- |
+| ffmpeg              | A very fast video and audio converter                                        |
+| git                 | A fast, scalable, distributed revision control system                        |
+| gnupg               | A set of programs for public key encryption and digital signatures           |
+| man                 | The man utility to display the manual pages entitled name                    |
+| nano                | A small and friendly editor                                                  |
+| neofetch            | A CLI system information tool written in Bash                                |
+| openssh             | Secure shell for logging into a remote machine                               |
+| openssh-sftp-server | OpenSSH SFTP server subsystem                                                |
+| python              | An interpreted, interactive, object-oriented programming language            |
+| tree                | A recursive directory listing program                                        |
+| yt-dlp              | A program to download videos from YouTube and a few more sites               |
+| ohmybash            | A delightful community-driven framework for managing your bash configuration |
 
 ## Screenshots
 
