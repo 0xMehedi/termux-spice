@@ -16,6 +16,13 @@
 # License  : MIT License
 ########################################################################
 
+# yt-dlp Configuration Location
+YTD_CFG="${HOME}/.config/yt-dlp/config"
+
+# yt-dlp Options
+YTD_OPT="--no-mtime --output ${HOME}/storage/downloads/%(title)s.%(ext)s"
+
+# Display Menu Options
 printf '%s\n' "© 2022 Mehedi Hasan"
 printf '%s\n\n' "https://github.com/0xMehedi"
 printf '%s\n' "To Download Audio Only,  Input 1"
@@ -25,36 +32,32 @@ printf '%s\n' "To Download 720p Video,  Input 4"
 printf '%s\n' "To Download 1080p Video, Input 5"
 printf '%s\n' "For Best Quality Video,  Input 0"
 
-command="-no-mtime -o ${HOME}/storage/downloads/%(title)s.%(ext)s -f"
-read -r option
+# Read User Input
+read -r INPUT
 
-if [ "$option" -eq "1" ]
-then
-  printf '%s\n' "$command 140" > "${HOME}/.config/yt-dlp/config"
-  yt-dlp "$1"
+# Validate User Input & Update yt-dlp Configuration
+if ! expr "${INPUT}" : "^[0-5]" > /dev/null; then
+  printf '\n%s\n' "Bailing out, as it can only be attributed to human error."
+  exit 1
 
-elif [ "$option" -eq "2" ]
-then
-  printf '%s\n' "$command \"best[height<=360]\"" > "${HOME}/.config/yt-dlp/config"
-  yt-dlp "$1"
+elif [ "${INPUT}" -eq "1" ]; then
+  printf '%s\n' "${YTD_OPT} --format 140" > "${YTD_CFG}"
 
-elif [ "$option" -eq "3" ]
-then
-  printf '%s\n' "$command \"best[height<=480]\"" > "${HOME}/.config/yt-dlp/config"
-  yt-dlp "$1"
+elif [ "${INPUT}" -eq "2" ]; then
+  printf '%s\n' "${YTD_OPT} --format \"best[height<=360]\"" > "${YTD_CFG}"
 
-elif [ "$option" -eq "4" ]
-then
-  printf '%s\n' "$command \"best[height<=720]\"" > "${HOME}/.config/yt-dlp/config"
-  yt-dlp "$1"
+elif [ "${INPUT}" -eq "3" ]; then
+  printf '%s\n' "${YTD_OPT} --format \"best[height<=480]\"" > "${YTD_CFG}"
 
-elif [ "$option" -eq "5" ]
-then
-  printf '%s\n' "$command \"best[height<=1080]\"" > "${HOME}/.config/yt-dlp/config"
-  yt-dlp "$1"
+elif [ "${INPUT}" -eq "4" ]; then
+  printf '%s\n' "${YTD_OPT} --format \"best[height<=720]\"" > "${YTD_CFG}"
 
-elif [ "$option" -eq "0" ]
-then
-  printf '%s\n' "$command \"bestvideo+bestaudio\"" > "${HOME}/.config/yt-dlp/config"
-  yt-dlp "$1"
+elif [ "${INPUT}" -eq "5" ]; then
+  printf '%s\n' "${YTD_OPT} --format \"best[height<=1080]\"" > "${YTD_CFG}"
+
+elif [ "${INPUT}" -eq "0" ]; then
+  printf '%s\n' "${YTD_OPT} --format \"bestvideo+bestaudio\"" > "${YTD_CFG}"
 fi
+
+# Download Files from the Shared URL
+yt-dlp "$1"
