@@ -34,16 +34,19 @@ printf '\n%s\n' "→ Installing Selected Packages"
 pkg install -y ffmpeg git gnupg man nano neofetch openssh openssh-sftp-server python tree
 sleep 1
 
+# Upgrade & Install Python Packages
+printf '\n%s\n' "→ Upgrading Pre-installed Python Packages"
+pip --disable-pip-version-check list --outdated --format=json \
+  | python -c "import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))" \
+  | xargs --max-args=1 pip install --upgrade 2> /dev/null
+
+printf '\n%s\n' "→ Installing Selected Python Packages"
+pip install yt-dlp
+sleep 1
+
 # Clone Termux Spice Repositiry
 printf '\n%s\n' "→ Cloning Termux Spice Repo"
 git clone https://github.com/0xMehedi/termux-spice.git "${HOME}/archives/termux-spice"
-
-# Upgrade setuptools & Install yt-dlp
-printf '\n%s\n' "→ Upgrading setuptools"
-pip install --upgrade setuptools
-
-printf '\n%s\n' "→ Installing yt-dlp"
-pip install yt-dlp
 sleep 1
 
 # Set Up yt-dlp
