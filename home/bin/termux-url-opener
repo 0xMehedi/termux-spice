@@ -17,10 +17,28 @@
 ########################################################################
 
 # yt-dlp Configuration Location
-YTD_CFG="${HOME}/.config/yt-dlp/config"
+YD_CFG="${HOME}/.config/yt-dlp/config"
 
 # yt-dlp Options
-YTD_OPT="--no-mtime --output ${HOME}/storage/downloads/%(title)s.%(ext)s"
+YDO_COMMON="\
+--force-ipv4 \
+--concurrent-fragments 2 \
+--throttled-rate 56K \
+--output ${HOME}/storage/downloads/%(title)s.%(ext)s \
+--no-overwrites \
+--no-mtime \
+--sleep-interval 5 \
+--max-sleep-interval 15 \
+--check-formats \
+--merge-output-format mkv \
+--embed-metadata \
+--embed-chapters"
+
+YDO_AUDIO="--extract-audio"
+
+YDO_VIDEO="\
+--sub-langs all,-live_chat \
+--embed-subs"
 
 BEST_AUDIO="(bestaudio[acodec^=opus]/bestaudio)"
 
@@ -43,22 +61,22 @@ if ! expr "${INPUT}" : "^[0-5]" > /dev/null; then
   exit 1
 
 elif [ "${INPUT}" -eq "1" ]; then
-  printf '%s\n' "${YTD_OPT} --extract-audio --format \"${BEST_AUDIO}\"" > "${YTD_CFG}"
+  printf '%s\n' "${YDO_COMMON} ${YDO_AUDIO} --format \"${BEST_AUDIO}\"" > "${YD_CFG}"
 
 elif [ "${INPUT}" -eq "2" ]; then
-  printf '%s\n' "${YTD_OPT} --format \"bestvideo[height<=720]+${BEST_AUDIO}\"" > "${YTD_CFG}"
+  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=720]+${BEST_AUDIO}\"" > "${YD_CFG}"
 
 elif [ "${INPUT}" -eq "3" ]; then
-  printf '%s\n' "${YTD_OPT} --format \"bestvideo[height<=1080]+${BEST_AUDIO}\"" > "${YTD_CFG}"
+  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=1080]+${BEST_AUDIO}\"" > "${YD_CFG}"
 
 elif [ "${INPUT}" -eq "4" ]; then
-  printf '%s\n' "${YTD_OPT} --format \"bestvideo[height<=1440]+${BEST_AUDIO}\"" > "${YTD_CFG}"
+  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=1440]+${BEST_AUDIO}\"" > "${YD_CFG}"
 
 elif [ "${INPUT}" -eq "5" ]; then
-  printf '%s\n' "${YTD_OPT} --format \"bestvideo[height<=2160]+${BEST_AUDIO}\"" > "${YTD_CFG}"
+  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=2160]+${BEST_AUDIO}\"" > "${YD_CFG}"
 
 elif [ "${INPUT}" -eq "0" ]; then
-  printf '%s\n' "${YTD_OPT} --format \"bestvideo+${BEST_AUDIO}\"" > "${YTD_CFG}"
+  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo+${BEST_AUDIO}\"" > "${YD_CFG}"
 fi
 
 # Download Files from the Shared URL
