@@ -16,10 +16,14 @@
 # License  : MIT License
 ########################################################################
 
-# yt-dlp Configuration Location
+# Set Global Variables
+## Error Message
+ERROR_MSG="Please enter a valid number from the available options."
+
+## yt-dlp Configuration Location
 YD_CFG="${HOME}/.config/yt-dlp/config"
 
-# yt-dlp Options
+## yt-dlp Options
 YDO_COMMON="\
 --force-ipv4 \
 --concurrent-fragments 2 \
@@ -42,42 +46,87 @@ YDO_VIDEO="\
 
 BEST_AUDIO="(bestaudio[acodec^=opus]/bestaudio)"
 
-# Display Menu Options
+# Choose an Operation to Perform
 printf '%s\n' "© 2022 Mehedi Hasan"
 printf '%s\n\n' "https://github.com/0xMehedi"
-printf '%s\n' "To Download Audio Only,  Input 1"
-printf '%s\n' "To Download 720p Video,  Input 2"
-printf '%s\n' "To Download 1080p Video, Input 3"
-printf '%s\n' "To Download 1440p Video, Input 4"
-printf '%s\n' "To Download 2160p Video, Input 5"
-printf '%s\n' "For Best Quality Video,  Input 0"
+printf '%s\n\n' "What should be done with \"${1}\" ?"
 
-# Read User Input
-read -r INPUT
+printf '%s\n' "a) Generate QR Code with qrencode"
+printf '%s\n' "b) Download Files with yt-dlp"
 
-# Validate User Input & Update yt-dlp Configuration
-if ! expr "${INPUT}" : "^[0-5]" > /dev/null; then
+## Read User Choice
+read -r CHOICE
+
+## Perform Operation of Choice
+case ${CHOICE} in
+
+a)
+  ### qrencode
+  printf '%s\n' "To Display QR Code, Input 1"
+  printf '%s\n' "To Save QR Code,    Input 2"
+
+  #### Read and Validate User Input for qrencode
+  read -r INPUT_QR
+
+  if ! expr "${INPUT_QR}" : "^[1-2]" >/dev/null; then
+    printf '\n%s\n' "${ERROR_MSG}"
+    exit 1
+
+  #### Display QR Code
+  elif [ "${INPUT_QR}" -eq "1" ]; then
+    qrencode --output=- --type=UTF8 --verbose "${1}" \
+      && sleep 15
+
+  #### Save QR Code
+  elif [ "${INPUT_QR}" -eq "2" ]; then
+    qrencode --output="${HOME}/storage/downloads/QR_$(date +%Y%m%d_%H%M%S).png" --size=18 --type=PNG --verbose "${1}" \
+      && sleep 5
+  fi
+  ;;
+
+b)
+  ### yt-dlp
+  printf '%s\n' "To Download Audio Only,  Input 1"
+  printf '%s\n' "To Download 720p Video,  Input 2"
+  printf '%s\n' "To Download 1080p Video, Input 3"
+  printf '%s\n' "To Download 1440p Video, Input 4"
+  printf '%s\n' "To Download 2160p Video, Input 5"
+  printf '%s\n' "For Best Quality Video,  Input 0"
+
+  #### Read and Validate User Input for yt-dlp
+  read -r INPUT_YD
+
+  if ! expr "${INPUT_YD}" : "^[0-5]" >/dev/null; then
+    printf '\n%s\n' "${ERROR_MSG}"
+    exit 1
+
+  #### Update yt-dlp Configuration
+  elif [ "${INPUT_YD}" -eq "1" ]; then
+    printf '%s\n' "${YDO_COMMON} ${YDO_AUDIO} --format \"${BEST_AUDIO}\"" >"${YD_CFG}"
+
+  elif [ "${INPUT_YD}" -eq "2" ]; then
+    printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=720]+${BEST_AUDIO}\"" >"${YD_CFG}"
+
+  elif [ "${INPUT_YD}" -eq "3" ]; then
+    printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=1080]+${BEST_AUDIO}\"" >"${YD_CFG}"
+
+  elif [ "${INPUT_YD}" -eq "4" ]; then
+    printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=1440]+${BEST_AUDIO}\"" >"${YD_CFG}"
+
+  elif [ "${INPUT_YD}" -eq "5" ]; then
+    printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=2160]+${BEST_AUDIO}\"" >"${YD_CFG}"
+
+  elif [ "${INPUT_YD}" -eq "0" ]; then
+    printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo+${BEST_AUDIO}\"" >"${YD_CFG}"
+  fi
+
+  #### Download Files from the Shared URL
+  yt-dlp "${1}"
+  ;;
+
+*)
+  ### Validate User Choice for the Case Statement
   printf '\n%s\n' "Bailing out, as it can only be attributed to human error."
   exit 1
-
-elif [ "${INPUT}" -eq "1" ]; then
-  printf '%s\n' "${YDO_COMMON} ${YDO_AUDIO} --format \"${BEST_AUDIO}\"" > "${YD_CFG}"
-
-elif [ "${INPUT}" -eq "2" ]; then
-  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=720]+${BEST_AUDIO}\"" > "${YD_CFG}"
-
-elif [ "${INPUT}" -eq "3" ]; then
-  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=1080]+${BEST_AUDIO}\"" > "${YD_CFG}"
-
-elif [ "${INPUT}" -eq "4" ]; then
-  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=1440]+${BEST_AUDIO}\"" > "${YD_CFG}"
-
-elif [ "${INPUT}" -eq "5" ]; then
-  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo[height<=2160]+${BEST_AUDIO}\"" > "${YD_CFG}"
-
-elif [ "${INPUT}" -eq "0" ]; then
-  printf '%s\n' "${YDO_COMMON} ${YDO_VIDEO} --format \"bestvideo+${BEST_AUDIO}\"" > "${YD_CFG}"
-fi
-
-# Download Files from the Shared URL
-yt-dlp "$1"
+  ;;
+esac

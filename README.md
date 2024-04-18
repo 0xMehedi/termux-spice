@@ -1,4 +1,4 @@
-<!-- cspell:words Mehedi Hasan mandoc neofetch ohmybash termux toolset -->
+<!-- cspell:words Mehedi Hasan libqrencode mandoc neofetch ohmybash termux toolset -->
 
 # Termux Spice
 
@@ -17,6 +17,7 @@ _Termux Spice_ installs / configures the following packages:
 | ffmpeg              | Tools and libraries to manipulate a wide range of multimedia formats and protocols       |
 | git                 | Fast, scalable, distributed revision control system                                      |
 | gnupg               | Implementation of the OpenPGP standard for encrypting and signing data and communication |
+| libqrencode         | Fast and compact library for encoding data in a QR Code symbol                           |
 | man                 | Man page viewer from the mandoc toolset                                                  |
 | nano                | Small, free and friendly text editor                                                     |
 | neofetch            | Simple system information script                                                         |
