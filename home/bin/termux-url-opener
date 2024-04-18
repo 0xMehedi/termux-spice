@@ -53,6 +53,7 @@ printf '%s\n\n' "What should be done with \"${1}\" ?"
 
 printf '%s\n' "a) Generate QR Code with qrencode"
 printf '%s\n' "b) Download Files with yt-dlp"
+printf '%s\n' "x) Exit"
 
 ## Read User Choice
 read -r CHOICE
@@ -122,6 +123,11 @@ b)
 
   #### Download Files from the Shared URL
   yt-dlp "${1}"
+  ;;
+
+x)
+  ### Gracefully Exit the Script
+  exit 0
   ;;
 
 *)
