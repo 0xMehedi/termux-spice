@@ -53,6 +53,7 @@ printf '%s\n\n' "What should be done with \"${1}\" ?"
 
 printf '%s\n' "a) Generate QR Code with qrencode"
 printf '%s\n' "b) Download Files with yt-dlp"
+printf '%s\n' "c) Download Files with curl"
 printf '%s\n' "x) Exit"
 
 ## Read User Choice
@@ -123,6 +124,14 @@ b)
 
   #### Download Files from the Shared URL
   yt-dlp "${1}"
+  ;;
+
+c)
+  ### curl
+
+  #### Download Files from the Shared URL
+  curl --connect-timeout 15 --continue-at - --location --netrc-optional --output-dir "${HOME}/storage/downloads" \
+  --parallel --parallel-immediate --remote-name --remote-time --remove-on-error "${1}"
   ;;
 
 x)
