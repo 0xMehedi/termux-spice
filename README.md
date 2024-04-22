@@ -1,4 +1,4 @@
-<!-- cspell:words Mehedi Hasan libqrencode mandoc neofetch ohmybash termux toolset -->
+<!-- cspell:words Mehedi Hasan libqrencode mandoc neofetch ohmybash qrencode termux toolset -->
 
 # Termux Spice
 
@@ -31,6 +31,10 @@ _Termux Spice_ installs / configures the following packages:
 ## Screenshots
 
 ![neofetch](./assets/img/neofetch.jpg "Neofetch")
+
+![termux-url-opener - Main Menu](./assets/img/menu_main.jpg "termux-url-opener - Main Menu")
+![termux-url-opener - qrencode Menu](./assets/img/menu_qrencode.jpg "termux-url-opener - qrencode Menu")
+![termux-url-opener - yt-dlp Menu](./assets/img/menu_yt-dlp.jpg "termux-url-opener - yt-dlp Menu")
 
 ## Installation
 
