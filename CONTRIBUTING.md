@@ -1,4 +1,4 @@
-<!-- cspell:words Mehedi Hasan shellcheck termux -->
+<!-- cspell:words Mehedi Hasan posix shellcheck termux -->
 
 <!-- markdownlint-disable MD041 -->
 
@@ -10,6 +10,8 @@ Just submit a _Pull Request_ with changes you made which will then be reviewed a
 ### Bear in Mind
 
 - Follow shell scripting best practices as in [Google’s Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
+
+- The only exception to Google’s Shell Style Guide is that we require all scripts to be POSIX-compliant
 
 - Make use of [shellcheck](https://www.shellcheck.net/) to avoid bugs in your shell scripts
 
